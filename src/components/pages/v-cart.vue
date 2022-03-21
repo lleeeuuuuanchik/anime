@@ -4,33 +4,27 @@
         <header>
             <img @click="showPerfomance(0)"  src="@/assets/img/logo_black.png" alt="">
             <nav>
-                <a>Toys</a>
-                <a @click="showPerfomance(2)" >Tarrifs</a>
-                <a @click="showPerfomance(3)" >About us</a>
+                <a @click="showPerfomance(1)">Toys</a>
+                <a @click="showPerfomance(2)">Tarrifs</a>
+                <a @click="showPerfomance(3)">About us</a>
             </nav>
             <div class="for-change-card-lenght">
-                <img  @click="switchCardLenghtPlus"  src="@/assets/img/1.png" alt="">
-                <img  @click="switchCardLenghtMinus" src="@/assets/img/2.png" alt="">
                 <img  @click="showPerfomance(4)"  src="@/assets/img/cart.png" alt="">
             </div>
         </header>
 
-        <body>
-            <form action="">
-                <input type="text" placeholder="write here...">
+       <main>
+         <h1>Your cart</h1>
 
-            </form>
-        </body>
-
-        <div class="cardContainer">
-            <vCard @addToCart="addToCart" v-for="(item, index) in cardArray" :key="index" :item = "item" v-show="maxIndex >= index && minIndex <= index"> </vCard>
-        </div>
-
-        <div class="paggination-container">
-            <div class="paggination">
-                <span :class="{'active':currentSlide === index}" @click="nextSlide(index)" v-for="(item, index) in Math.ceil(cardArray.length/countSlide)" :key="index">{{index+1}}</span>
-            </div>
-        </div>
+          
+          <ul>
+            <li v-for="(item, index ) in arrayShopCart" :key="index">
+              <img :src="require(`../../assets/img/for_card/${item.img}`)" alt="">
+              <button @click="removeCard(index)">remove</button>
+              <vSwitcher/>
+            </li>
+          </ul>
+       </main>
         
     </div>
     <footer >
@@ -44,29 +38,27 @@
 </template>
 
 <script>
-import vCard from "@/components/card.vue"
+import vSwitcher from "../v-switcher.vue"
 export default {
+    name: "vCart",
+
+    
     data() {
         return {
-            cardArray: [
-                {id: 1, img: "product-1-removebg-preview.png", name: "Naruto Uzumaki", information: "The most popular anime character", price: "500$",},
-                {id: 2, img: "product-2-removebg-preview.png", name: "Naruto Uzumaki", information: "The most popular anime character", price: "500$",}, 
-                {id: 3, img: "product-3-removebg-preview.png", name: "Naruto Uzumaki", information: "The most popular anime character", price: "500$",},
-                {id: 4, img: "product-4-removebg-preview.png", name: "Naruto Uzumaki", information: "The most popular anime character", price: "500$",},
-                {id: 5, img: "product-4-removebg-preview.png", name: "Naruto Uzumaki", information: "The most popular anime character", price: "500$",},
-                
-            ],
-
-            cartArray: [],
-
-            currentSlide: 0,
-
-            maxIndex: 2,
-            minIndex: 0,
-            min: 0,
-            max: 2,
-            countSlide: 3
+          arrayShopCart: []
         }
+    },
+
+    watch: {
+      currentCard(val) {
+        if(this.arrayShopCart.includes(val)) {
+          console.log("Такая карта уже есть");
+        }
+        else {
+          this.arrayShopCart.push(val)
+          console.log("NEW end ", this.arrayShopCart);
+        }
+      }
     },
 
     methods: {
@@ -84,10 +76,8 @@ export default {
             
         },
 
-        addToCart(item) {
-            console.log("Вывод индекса ", this.cardArray[this.cardArray.indexOf(item)] );
-            this.$emit("addToCart", this.cardArray[this.cardArray.indexOf(item)])
-            
+        removeCard(index) {
+          this.arrayShopCart.splice(index, 1)
         },
 
         switchCardLenghtPlus() {
@@ -108,11 +98,13 @@ export default {
     },
 
     components: {
-        vCard,
+      vSwitcher,
     },
 
     props: {
-        
+        currentCard: {
+          type: Object
+        }
     }
 }
 
@@ -121,6 +113,15 @@ export default {
 </script>
 
 <style scoped>
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      margin: 50px 0px;
+    }
+
+    ul {
+      display: flex;
+    }
+
     .body {
         width: 100vw;
         height: 100vh;

@@ -1,7 +1,4 @@
-
-
 // ------------------------------------------------------ HTML
-
 <template>
   <div class="perfomance" v-show="switchPage === 0">
     <div class = "slider">
@@ -20,10 +17,12 @@
     </div>
   </div>
 
-  <vShop v-show="switchPage === 1" @perfomanceShow = "returnToPerfomance"></vShop>
+  <vShop @addToCart="addToCart" v-show="switchPage === 1" @perfomanceShow = "returnToPerfomance"></vShop>
   
   <vAbout v-show="switchPage === 2" @perfomanceShow = "returnToPerfomance"></vAbout>
   <vTarrifs v-show="switchPage === 3" @perfomanceShow = "returnToPerfomance"></vTarrifs>
+
+  <vCart :currentCard="currentCard" v-show="switchPage === 4" @perfomanceShow = "returnToPerfomance"></vCart>
 
 
 </template>
@@ -35,9 +34,9 @@
 import database from "./array.js"
 import vCarousel from "./components/v-carousel.vue"
 import vShop from "./components/pages/v-shop.vue"
-import vAbout from "./components/pages/v-shop.vue"
-import vTarrifs from "./components/pages/v-shop.vue"
-
+import vAbout from "./components/pages/v-about.vue"
+import vTarrifs from "./components/pages/v-tarrifs.vue"
+import vCart from "./components/pages/v-cart.vue"
 
 export default {
   data() {
@@ -45,6 +44,7 @@ export default {
       arraySlider: [],
       show: true,
       switchPage: 0,
+      currentCard: null,
     }
   },
 
@@ -53,15 +53,22 @@ export default {
     vShop,
     vAbout,
     vTarrifs,
+    vCart,
   },
 
   methods: {
 
     returnToPerfomance(numberPages) {
-      this.switchPage = numberPages
       console.log(numberPages)
       console.log(this.switchPage)
+      this.switchPage = numberPages
       
+      
+    },
+
+    addToCart(card) {
+      console.log("reload card ", card);
+      this.currentCard = card
     }
 
   },

@@ -5,7 +5,7 @@
       <h2>{{item.name}}</h2>
       <p class="card-information">{{item.information}}</p>
       <p class="card-price">{{item.price}}</p>
-      <button class="card-button">add to card</button>
+      <button class="card-button"  @click="addToCart(item)" >add to card</button>
   </div>
 </template>
 
@@ -14,6 +14,14 @@ export default {
     data() {
         return {
 
+        }
+    },
+
+    methods: {
+        addToCart(item) {
+            console.log("press to cart ", item);
+            this.$emit("addToCart", item)
+            
         }
     },
 
@@ -29,7 +37,6 @@ export default {
     .card-container {
         width: 300px;
         height: auto;
-            
         flex-direction: column;
     }
 
