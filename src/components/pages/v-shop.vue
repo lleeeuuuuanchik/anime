@@ -88,6 +88,7 @@ export default {
             console.log("Вывод индекса ", this.cardArray[this.cardArray.indexOf(item)] );
             this.$emit("addToCart", this.cardArray[this.cardArray.indexOf(item)])
             
+            this.$swal('Товар добавлен в корзину')
         },
 
         switchCardLenghtPlus() {

@@ -20,7 +20,9 @@
           <ul>
             <li v-for="(item, index ) in arrayShopCart" :key="index">
               <img :src="require(`../../assets/img/for_card/${item.img}`)" alt="">
-              <button @click="removeCard(index)">remove</button>
+              <p>{{item.name}}</p>
+              <p>{{item.price }}</p>
+              <button class="btn" @click="removeCard(index)">remove</button>
               <vSwitcher/>
             </li>
           </ul>
@@ -77,6 +79,7 @@ export default {
         },
 
         removeCard(index) {
+            this.$swal('Товар удален из карзины')
           this.arrayShopCart.splice(index, 1)
         },
 
@@ -113,13 +116,30 @@ export default {
 </script>
 
 <style scoped>
+
+    li {
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        gap: 30px
+    }
+
     h1 {
       font-family: 'Montserrat', sans-serif;
       margin: 50px 0px;
     }
 
+    .btn {
+        width: 200px;
+        height: 50px;
+        background: #FF9900;
+        color: black;
+    }
+
     ul {
       display: flex;
+      gap: 100px;
+
     }
 
     .body {
