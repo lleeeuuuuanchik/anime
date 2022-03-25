@@ -17,8 +17,12 @@
 
         <body>
             <form action="">
-                <input type="text" placeholder="write here...">
-
+                <input v-model="NapisanoAAA" type="text" placeholder="write here...">
+                <div class = "productsSearch">
+                    <p class = "productList" v-for="(item, index) in searchAnyToy" :key="index">
+                        {{item.name}}
+                    </p>
+                </div>
             </form>
         </body>
 
@@ -50,10 +54,10 @@ export default {
         return {
             cardArray: [
                 {id: 1, img: "product-1-removebg-preview.png", name: "Naruto Uzumaki", information: "The most popular anime character", price: "500$",},
-                {id: 2, img: "product-2-removebg-preview.png", name: "Naruto Uzumaki", information: "The most popular anime character", price: "500$",}, 
-                {id: 3, img: "product-3-removebg-preview.png", name: "Naruto Uzumaki", information: "The most popular anime character", price: "500$",},
-                {id: 4, img: "product-4-removebg-preview.png", name: "Naruto Uzumaki", information: "The most popular anime character", price: "500$",},
-                {id: 5, img: "product-4-removebg-preview.png", name: "Naruto Uzumaki", information: "The most popular anime character", price: "500$",},
+                {id: 2, img: "product-2-removebg-preview.png", name: "Levi", information: "The most popular anime character", price: "500$",}, 
+                {id: 3, img: "product-3-removebg-preview.png", name: "Sergei", information: "The most popular anime character", price: "500$",},
+                {id: 4, img: "product-4-removebg-preview.png", name: "Zaur", information: "The most popular anime character", price: "500$",},
+                {id: 5, img: "product-4-removebg-preview.png", name: "Levan", information: "The most popular anime character", price: "500$",},
                 
             ],
 
@@ -65,7 +69,22 @@ export default {
             minIndex: 0,
             min: 0,
             max: 2,
-            countSlide: 3
+            countSlide: 3,
+
+            NapisanoAAA: ""
+        }
+    },
+
+    computed: {
+        searchAnyToy() {
+            if(this.NapisanoAAA.length === 0) {
+                return
+            }
+            else {
+                return this.cardArray.filter( item => {
+                    return item.name.toLowerCase().includes(this.NapisanoAAA)
+                })
+            }
         }
     },
 
@@ -210,6 +229,22 @@ export default {
         display: flex;
         justify-content: center;
         margin-top: 50px;
+        
+    }
+
+    .productsSearch {
+        position: absolute;
+        font-size: 20px;
+        top: 18%;
+        width: 1200px;
+        color: white;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+    }
+
+    .productsSearch p {
+        margin: 20px;
+
     }
 
     input:focus {
